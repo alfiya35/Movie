@@ -1,27 +1,42 @@
 package ru.netology.manager;
 
-import ru.netology.domian.MovieItem;
-
 public class MovieManager {
 
-    private MovieItem[] items = new MovieItem[0];
+    private String[] items = new String[0];
 
-    private int LimitManager;
-   private int maxLimitManager = 10;
+    private int limitLength = 10;
 
-
-    public int getLimitManager() {
-        return LimitManager;
+    //Конструкторы
+    public MovieManager() {   //Конструктор по умолчанию(10 фильмов)
     }
 
-    public void setLimitManager(int limitManager) {
-        LimitManager = maxLimitManager;
+
+    public MovieManager(int limitLength) { //Конструктор с параметрами
+        this.limitLength = limitLength;
     }
 
-    public void save(MovieItem item) { //метод добавления нового фильма
+    //Геттеры и сеттеры
+
+    public String[] getItems() {
+        return items;
+    }
+
+    public void setItems(String[] items) {
+        this.items = items;
+    }
+
+    public int getLimitLength() {
+        return limitLength;
+    }
+
+    public void setLimitLength(int limitLength) {
+        this.limitLength = limitLength;
+    }
+
+    public void save(String item) { //метод добавления нового фильма
         //создаем новый массив размером на еденицу больше
         int length = items.length + 1;
-        MovieItem[] tmp = new MovieItem[length];
+        String[] tmp = new String[length];
         //копируем поэлементоно
         System.arraycopy(items, 0, tmp, 0, items.length);
         //кладем последний наш элемент
@@ -30,19 +45,18 @@ public class MovieManager {
         items = tmp;
     }
 
-    public MovieItem[] findAll() {  //вывод всех фильмов в порядке добавления
+    public String[] findAll() {  //вывод всех фильмов в порядке добавления
         return items;
     }
 
-    public MovieManager() {   //Конструктор по умолчанию(10 фильмов)
-    }
 
-    public MovieManager(int sumMovie) { //Конструктор с параметрами
-        LimitManager = sumMovie;
-    }
-    public MovieItem[] findLast() {//Метод получения последних фильмов в обратном порядке
-        int resultLength = items.length - maxLimitManager;
-        MovieItem[] result = new  MovieItem[items.length - resultLength];
+    public String[] findLast() {//Метод получения последних фильмов в обратном порядке
+        int resultLength = items.length;
+        if (resultLength > limitLength) {
+            resultLength = limitLength;
+        }
+
+        String[] result = new String[resultLength];
         for (int i = 0; i < result.length; i++) {
             int index = items.length - i - 1;
             result[i] = items[index];
